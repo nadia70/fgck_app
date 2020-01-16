@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "49845128757",
+    "firebase_url": "https://fgck-fc5a5.firebaseio.com",
+    "project_id": "fgck-fc5a5",
+    "storage_bucket": "fgck-fc5a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49845128757:android:fbd53d4a7abd12ecbc2b7c",
+        "android_client_info": {
+          "package_name": "com.nadia.fgck_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49845128757-llavgt8nvrvu001lc1mjom40cesgsceo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5OKLnqnHtwa9gwvL5s6SzDm1HM0V-STo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49845128757-llavgt8nvrvu001lc1mjom40cesgsceo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
