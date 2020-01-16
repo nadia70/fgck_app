@@ -6,10 +6,27 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.2'
+        classpath 'com.google.gms:google-services:4.3.3'
     }
+
+    subprojects {
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support'
+                        && !details.requested.name.contains('multidex') ) {
+                    details.useVersion "27.1.1"
+                }
+
+                if (details.requested.group == 'androidx.core'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.1"
+                }
+            }
+        }
+    }
+
 }
 
 allprojects {
@@ -25,22 +42,15 @@ subprojects {
 }
 
 subprojects {
-    project.evaluationDependsOn(':app')
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
-        }
-    }
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'androidx.core' &&
+            if (details.requested.group == 'androidx.localbroadcastmanager' &&
                     !details.requested.name.contains('androidx')) {
-                details.useVersion "1.0.1"
+                details.useVersion "1.0.0"
             }
         }
     }
 }
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
