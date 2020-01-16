@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -13,6 +15,7 @@ class _AdminState extends State<Admin> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   File videoFile;
   TextEditingController prodcutTitle = new TextEditingController();
   TextEditingController prodcutPrice = new TextEditingController();
@@ -22,6 +25,80 @@ class _AdminState extends State<Admin> {
     // Create and store the VideoPlayerController. The VideoPlayerController
     // offers several different constructors to play videos from assets, files,
     super.initState();
+  }
+
+
+
+  addNewProducts() async{
+    if (videoFile == null) {
+      final snackbar = SnackBar(
+        content: Text('you have not selected a video'),
+      );
+      scaffoldKey.currentState.showSnackBar(snackbar);
+    }
+
+    if (prodcutTitle.text == "") {
+      final snackbar = SnackBar(
+        content: Text('invallid login details'),
+      );
+      scaffoldKey.currentState.showSnackBar(snackbar);
+    }
+
+    if (prodcutPrice.text == "") {
+      final snackbar = SnackBar(
+        content: Text('invallid login details'),
+      );
+      scaffoldKey.currentState.showSnackBar(snackbar);
+    }
+
+
+      StorageReference reference =
+      FirebaseStorage.instance.ref().child(videoFile.path.toString());
+      StorageUploadTask uploadTask = reference.putFile(videoFile);
+
+      StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+
+      String url = (await downloadUrl.ref.getDownloadURL());
+
+    Firestore.instance.runTransaction((Transaction transaction) async {
+      CollectionReference reference = Firestore.instance.collection('service');
+
+      await reference.add({
+        "Title": prodcutTitle.text,
+        "preacher": prodcutPrice.text,
+        "video": url,
+      });
+    }).then((result) =>
+
+        _showRequest());
+
+  }
+
+  void _showRequest() {
+    // flutter defined function
+    setState(() {
+      prodcutTitle.text= "";
+      prodcutPrice.text="";
+      _controller.dispose();
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Your data has been saved"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -107,6 +184,7 @@ class _AdminState extends State<Admin> {
             appButton(
                 btnTxt: "Add new Video",
                 btnPadding: 20.0,
+                onBtnclicked: addNewProducts,
                 btnColor: Colors.white),
           ],
         ),
@@ -212,7 +290,7 @@ Widget appButton(
   return Padding(
     padding: new EdgeInsets.all(btnPadding),
     child: new RaisedButton(
-      color: Colors.white,
+      color: Colors.green,
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.all(new Radius.circular(15.0))),
       onPressed: onBtnclicked,
