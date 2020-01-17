@@ -114,10 +114,6 @@ class _HomeState extends State<Home> {
                         {
                           return Column(
                             children: <Widget>[
-                              Text("Previous videos", style: new TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: Colors.black),),
                               new Card(
                                 child: Stack(
                                   alignment: FractionalOffset.topLeft,
