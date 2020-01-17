@@ -28,7 +28,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
       videoPlayerController: widget.videoPlayerController,
       aspectRatio: 16 / 9,
       // Prepare the video to be played and display the first frame
-      autoInitialize: true,
+      autoInitialize: false,
       looping: widget.looping,
       // Errors can occur for example when trying to play a video
       // from a non-existent URL

@@ -68,6 +68,7 @@ class _AdminState extends State<Admin> {
           "Title": prodcutTitle.text,
           "preacher": prodcutPrice.text,
           "video": url,
+          "time": DateTime.now()
         });
       }).then((result) =>
 
