@@ -18,8 +18,8 @@ class _HomeState extends State<Home> {
 
   Future getNew() async{
     var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection("videos").orderBy('time').limit(1).getDocuments();
-    return qn.documents;
+    QuerySnapshot snap = await firestore.collection("videos").orderBy('time').limit(1).getDocuments();
+    return snap.documents;
   }
 
   @override
@@ -46,22 +46,19 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Text("Newest upload"),
-                            ChewieListItem(
-                              videoPlayerController: VideoPlayerController.network(
-                                snapshot.data[index].data["video"],
-                              ),
+                      Column(
+                        children: <Widget>[
+                          Text("Newest upload",
+                            style: new TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24.0,
+                                color: Colors.black),),
+                          ChewieListItem(
+                            videoPlayerController: VideoPlayerController.network(
+                              snapshot.data[index].data["video"],
                             ),
-                          ],
-                        ),
-                      ),
-
-                      new SizedBox(
-                        height: 5.0,
+                          ),
+                        ],
                       ),
                     ],
                   );
@@ -81,22 +78,13 @@ class _HomeState extends State<Home> {
                       );
                     }if (snapshot.data == null){
                       return Center(
-                        child: Text("The are no pending requests"),);
+                        child: Text("The are no Videos"),);
                     }else{
                       return ListView.builder(
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           return Column(
                             children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Text("Newest upload"),
-
-                                  ],
-                                ),
-                              ),
                               new Card(
                                 child: Stack(
                                   alignment: FractionalOffset.topLeft,
@@ -104,7 +92,7 @@ class _HomeState extends State<Home> {
                                     Column(
                                       children: <Widget>[
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.all(5.0),
                                           child: ChewieListItem(
                                             videoPlayerController: VideoPlayerController.network(
                                                 snapshot.data[index].data["video"],
