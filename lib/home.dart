@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
                                                 new Text("${snapshot.data[index].data["Title"]}",
                                                   style: new TextStyle(
                                                       fontWeight: FontWeight.w700,
-                                                      fontSize: 12.0,
+                                                      fontSize: 18.0,
                                                       color: Colors.black),),
                                                 new Text("by.${snapshot.data[index].data["preacher"]}",
                                                   style: new TextStyle(
