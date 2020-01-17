@@ -12,7 +12,7 @@ class _HomeState extends State<Home> {
 
   Future getVideo() async{
     var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection("videos").orderBy('time').getDocuments();
+    QuerySnapshot qn = await firestore.collection("videos").getDocuments();
     return qn.documents;
   }
 
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                       ),
 
                       new SizedBox(
-                        height: 20.0,
+                        height: 5.0,
                       ),
                     ],
                   );
@@ -93,11 +93,7 @@ class _HomeState extends State<Home> {
                                 child: Column(
                                   children: <Widget>[
                                     Text("Newest upload"),
-                                    ChewieListItem(
-                                      videoPlayerController: VideoPlayerController.network(
-                                        snapshot.data[index].data["video"],
-                                      ),
-                                    ),
+
                                   ],
                                 ),
                               ),
