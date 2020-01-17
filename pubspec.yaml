@@ -28,7 +28,6 @@ dependencies:
   firebase_storage: ^3.0.0
   cloud_firestore: ^0.12.7
   chewie: ^0.9.7
-  firebase_messaging: 5.1.5
 
 dev_dependencies:
   flutter_test:
