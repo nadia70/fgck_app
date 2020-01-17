@@ -12,7 +12,7 @@ class _HomeState extends State<Home> {
 
   Future getVideo() async{
     var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection("trucks").getDocuments();
+    QuerySnapshot qn = await firestore.collection("videos").getDocuments();
     return qn.documents;
   }
 
