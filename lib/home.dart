@@ -107,7 +107,7 @@ class _HomeState extends State<Home> {
                         child: Text("The are no Videos"),);
                     }else{
                       return ListView.builder(
-                        scrollDirection: Axis.horizontal,
+                        reverse: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index)
 
