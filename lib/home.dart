@@ -29,45 +29,6 @@ class _HomeState extends State<Home> {
         child: Column(
           children: <Widget>[
 
-        new Flexible(
-        child: FutureBuilder(
-            future: getNew(),
-          builder: (context, snapshot){
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Text("Loading... Please wait"),
-              );
-            }if (snapshot.data == null){
-              return Center(
-                child: Text("The are no Videos"),);
-            }else{
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Text("Newest upload",
-                            style: new TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24.0,
-                                color: Colors.black),),
-                          ChewieListItem(
-                            videoPlayerController: VideoPlayerController.network(
-                              snapshot.data[index].data["video"],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-
-                },
-              );
-
-            }
-          }),),
             new Flexible(
               child: FutureBuilder(
                   future: getVideo(),
