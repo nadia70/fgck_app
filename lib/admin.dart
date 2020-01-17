@@ -29,7 +29,7 @@ class _AdminState extends State<Admin> {
 
 
 
-  addNewProducts() async{
+ void addNewProducts() async{
     if (videoFile == null) {
       final snackbar = SnackBar(
         content: Text('you have not selected a video'),
@@ -112,6 +112,7 @@ class _AdminState extends State<Admin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.deepPurple[900],
       appBar: AppBar(
         title: Text('ADMIN'),
@@ -181,11 +182,25 @@ class _AdminState extends State<Admin> {
             new SizedBox(
               height: 20.0,
             ),
-            appButton(
-                btnTxt: "Add new Video",
-                btnPadding: 20.0,
-                onBtnclicked: addNewProducts,
-                btnColor: Colors.white),
+            Padding(
+              padding: new EdgeInsets.all(10.0),
+              child: new RaisedButton(
+                color: Colors.green,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.all(new Radius.circular(15.0))),
+                onPressed: addNewProducts,
+                child: Container(
+                  height: 50.0,
+                  child: new Center(
+                    child: new Text(
+                      "save",
+                      style: new TextStyle(color: Colors.white, fontSize: 18.0),
+                    ),
+                  ),
+                ),
+              ),
+            )
+
           ],
         ),
       ),
