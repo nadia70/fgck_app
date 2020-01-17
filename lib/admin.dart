@@ -39,19 +39,19 @@ class _AdminState extends State<Admin> {
 
     if (prodcutTitle.text == "") {
       final snackbar = SnackBar(
-        content: Text('invallid login details'),
+        content: Text('Enter Title'),
       );
       scaffoldKey.currentState.showSnackBar(snackbar);
     }
 
     if (prodcutPrice.text == "") {
       final snackbar = SnackBar(
-        content: Text('invallid login details'),
+        content: Text('Enter Preacher Name'),
       );
       scaffoldKey.currentState.showSnackBar(snackbar);
     }
 
-
+    else {
       StorageReference reference =
       FirebaseStorage.instance.ref().child(videoFile.path.toString());
       StorageUploadTask uploadTask = reference.putFile(videoFile);
@@ -60,18 +60,19 @@ class _AdminState extends State<Admin> {
 
       String url = (await downloadUrl.ref.getDownloadURL());
 
-    Firestore.instance.runTransaction((Transaction transaction) async {
-      CollectionReference reference = Firestore.instance.collection('service');
+      await Firestore.instance.runTransaction((Transaction transaction) async {
+        CollectionReference reference = Firestore.instance.collection(
+            'videos');
 
-      await reference.add({
-        "Title": prodcutTitle.text,
-        "preacher": prodcutPrice.text,
-        "video": url,
-      });
-    }).then((result) =>
+        await reference.add({
+          "Title": prodcutTitle.text,
+          "preacher": prodcutPrice.text,
+          "video": url,
+        });
+      }).then((result) =>
 
-        _showRequest());
-
+          _showRequest());
+    }
   }
 
   void _showRequest() {
