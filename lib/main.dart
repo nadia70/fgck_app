@@ -1,4 +1,6 @@
 import 'package:fgck_app/admin.dart';
+import 'package:fgck_app/home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
-      home: Admin(),
+      home:  MyHomePage(),
     );
   }
 }
@@ -101,7 +103,12 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
                                 child: MaterialButton(
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    Navigator.of(context).push(new CupertinoPageRoute(
+                                        builder: (BuildContext context) => new Home()
+                                    )
+                                    );
+                                  },
                                   child: Text('Home',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -124,7 +131,12 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
                                 child: MaterialButton(
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    Navigator.of(context).push(new CupertinoPageRoute(
+                                        builder: (BuildContext context) => new  Admin()
+                                    )
+                                    );
+                                  },
                                   child: Text('Admin',
                                     style: TextStyle(
                                       fontSize: 20,
