@@ -56,9 +56,9 @@ class _AdminState extends State<Admin> {
       FirebaseStorage.instance.ref().child(videoFile.path.toString());
       StorageUploadTask uploadTask = reference.putFile(videoFile);
 
-      StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
+      StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
 
-      String url = (await downloadUrl.ref.getDownloadURL());
+      String url = await downloadUrl.ref.getDownloadURL();
 
       await Firestore.instance.runTransaction((Transaction transaction) async {
         CollectionReference reference = Firestore.instance.collection(
@@ -80,7 +80,6 @@ class _AdminState extends State<Admin> {
     setState(() {
       prodcutTitle.text= "";
       prodcutPrice.text="";
-      _controller.dispose();
     });
     showDialog(
       context: context,
