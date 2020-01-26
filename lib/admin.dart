@@ -68,7 +68,7 @@ class _AdminState extends State<Admin> {
       );
 
       String thumb = await Thumbnails.getThumbnail( // creates the specified path if it doesnt exist
-          videoFile: url,
+          videoFile: videoFile.path.toString(),
           imageType: ThumbFormat.PNG,
           quality: 30);
 
