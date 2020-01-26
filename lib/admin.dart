@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:thumbnails/thumbnails.dart';
 import 'package:video_player/video_player.dart';
 
 class Admin extends StatefulWidget {
@@ -19,6 +20,8 @@ class _AdminState extends State<Admin> {
   File videoFile;
   TextEditingController prodcutTitle = new TextEditingController();
   TextEditingController prodcutPrice = new TextEditingController();
+
+
 
   @override
   void initState() {
@@ -60,6 +63,15 @@ class _AdminState extends State<Admin> {
 
       String url = await downloadUrl.ref.getDownloadURL();
 
+      Center(
+        child: CircularProgressIndicator(),
+      );
+
+      String thumb = await Thumbnails.getThumbnail( // creates the specified path if it doesnt exist
+          videoFile: url,
+          imageType: ThumbFormat.PNG,
+          quality: 30);
+
       await Firestore.instance.runTransaction((Transaction transaction) async {
         CollectionReference reference = Firestore.instance.collection(
             'videos');
@@ -68,6 +80,7 @@ class _AdminState extends State<Admin> {
           "Title": prodcutTitle.text,
           "preacher": prodcutPrice.text,
           "video": url,
+          "thumbNail": thumb,
           "time": DateTime.now()
         });
       }).then((result) =>
@@ -78,6 +91,7 @@ class _AdminState extends State<Admin> {
 
   void _showRequest() {
     // flutter defined function
+
     setState(() {
       prodcutTitle.text= "";
       prodcutPrice.text="";
