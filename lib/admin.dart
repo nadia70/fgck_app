@@ -56,6 +56,19 @@ class _AdminState extends State<Admin> {
     }
 
     else {
+      final thumb = await VideoThumbnail.thumbnailFile(
+        video: videoFile.path.toString(),
+        imageFormat: ImageFormat.PNG,
+        maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 75,
+      );
+      final thumbImage = File(thumb);
+      StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(thumb);
+      StorageUploadTask upload = firebaseStorageRef.putFile(thumbImage,);
+      StorageTaskSnapshot taskSnapshot=await upload.onComplete;
+
+      String Imageurl = await taskSnapshot.ref.getDownloadURL();
+
       StorageReference reference =
       FirebaseStorage.instance.ref().child(videoFile.path.toString());
       StorageUploadTask uploadTask = reference.putFile(videoFile);
@@ -69,13 +82,6 @@ class _AdminState extends State<Admin> {
       );
 
 
-      final thumb = await VideoThumbnail.thumbnailFile(
-        video: videoFile.path.toString(),
-        imageFormat: ImageFormat.PNG,
-        maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-        quality: 75,
-      );
-
       await Firestore.instance.runTransaction((Transaction transaction) async {
         CollectionReference reference = Firestore.instance.collection(
             'videos');
@@ -84,7 +90,7 @@ class _AdminState extends State<Admin> {
           "Title": prodcutTitle.text,
           "preacher": prodcutPrice.text,
           "video": url,
-          "thumbNail": thumb,
+          "thumbNail": Imageurl,
           "time": DateTime.now()
         });
       }).then((result) =>

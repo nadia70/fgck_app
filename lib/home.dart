@@ -92,13 +92,12 @@ class _HomeState extends State<Home> {
                                           child: new Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
-                                              new Text("${snapshot.data[index].data["Title"]
-                                                  .substring(0,10)}...",
+                                              new Text("${snapshot.data[index].data["Title"]}",
                                                 style: new TextStyle(
                                                     fontWeight: FontWeight.w700,
                                                     fontSize: 12.0,
                                                     color: Colors.white),),
-                                              new Text("KSH.${snapshot.data[index].data["preacher"]}",
+                                              new Text("by:${snapshot.data[index].data["preacher"]}",
                                                 style: new TextStyle(
                                                     color: Colors.red[500],
                                                     fontWeight: FontWeight.w400),),
@@ -148,79 +147,7 @@ class _HomeState extends State<Home> {
 
             }
           }),),
-            new Flexible(
-              child: FutureBuilder(
-                  future: getVideo(),
-                  builder: (context, snapshot){
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: Text("Loading... Please wait"),
-                      );
-                    }if (snapshot.data == null){
-                      return Center(
-                        child: Text("The are no Videos"),);
-                    }else{
-                      return ListView.builder(
-                        reverse: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index)
 
-                        {
-                          return Column(
-                            children: <Widget>[
-                              new Card(
-                                child: Stack(
-                                  alignment: FractionalOffset.topLeft,
-                                  children: <Widget>[
-                                    Column(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: ChewieListItem(
-                                            videoPlayerController: VideoPlayerController.network(
-                                                snapshot.data[index].data["video"],
-                                            ),
-                                          ),
-                                        ),
-
-                                        new Container(
-                                          height:35.0 ,
-                                          color: Colors.white,
-                                          child: new Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: new Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-                                                new Text("${snapshot.data[index].data["Title"]}",
-                                                  style: new TextStyle(
-                                                      fontWeight: FontWeight.w700,
-                                                      fontSize: 18.0,
-                                                      color: Colors.black),),
-                                                new Text("by.${snapshot.data[index].data["preacher"]}",
-                                                  style: new TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.w400),),
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    new SizedBox(
-                                      height: 10.0,
-                                    ),
-
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-
-                        },
-                      );
-
-                    }
-                  }),)
           ],
         ),
       )
