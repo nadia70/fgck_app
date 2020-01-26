@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thumbnails/thumbnails.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class Admin extends StatefulWidget {
   @override
@@ -67,10 +68,13 @@ class _AdminState extends State<Admin> {
         child: CircularProgressIndicator(),
       );
 
-      String thumb = await Thumbnails.getThumbnail( // creates the specified path if it doesnt exist
-          videoFile: videoFile.path.toString(),
-          imageType: ThumbFormat.PNG,
-          quality: 30);
+
+      final thumb = await VideoThumbnail.thumbnailFile(
+        video: videoFile.path.toString(),
+        imageFormat: ImageFormat.PNG,
+        maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 75,
+      );
 
       await Firestore.instance.runTransaction((Transaction transaction) async {
         CollectionReference reference = Firestore.instance.collection(

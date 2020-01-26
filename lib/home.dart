@@ -54,9 +54,63 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
                               color: Colors.black),),
-                          ChewieListItem(
-                            videoPlayerController: VideoPlayerController.network(
-                              snapshot.data[index].data["video"],
+
+                          new GestureDetector(
+                            onTap: (){
+                              Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new videoDetail(
+
+                                itemImage: snapshot.data[index].data["thumbNail"][0],
+                                itemName: snapshot.data[index].data["Title"],
+                                itemPreacher: snapshot.data[index].data["preacher"],
+                                itemRating: snapshot.data[index].data["productRating"],
+                                itemDescription: snapshot.data[index].data["productDesc"],
+                                index: index,
+
+
+                              )));
+                            },
+                            child: new Card(
+                              child: Stack(
+                                alignment: FractionalOffset.topLeft,
+                                children: <Widget>[
+                                  new Stack(
+                                    alignment: FractionalOffset.bottomCenter,
+                                    children: <Widget>[
+                                      new Container(
+                                        decoration: new BoxDecoration(
+                                            image: new DecorationImage(
+                                                fit: BoxFit.fitWidth ,
+                                                image: new NetworkImage(snapshot.data[index].data["thumbNail"]))
+                                        ),
+
+                                      ),
+                                      new Container(
+                                        height:35.0 ,
+                                        color: Colors.black.withAlpha(100),
+                                        child: new Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: new Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              new Text("${snapshot.data[index].data["Title"]
+                                                  .substring(0,10)}...",
+                                                style: new TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 12.0,
+                                                    color: Colors.white),),
+                                              new Text("KSH.${snapshot.data[index].data["preacher"]}",
+                                                style: new TextStyle(
+                                                    color: Colors.red[500],
+                                                    fontWeight: FontWeight.w400),),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+
+                                ],
+                              ),
                             ),
                           ),
 
@@ -172,5 +226,38 @@ class _HomeState extends State<Home> {
       )
 
     );
+  }
+}
+
+
+class videoDetail extends StatefulWidget {
+  String itemName;
+  String itemPreacher;
+  String itemSubName;
+  String itemImage;
+  String itemRating;
+  String itemDescription;
+  final index;
+
+  videoDetail({
+
+    this.itemName,
+    this.itemPreacher,
+    this.itemSubName,
+    this.itemImage,
+    this.itemRating,
+    this.itemDescription,
+    this.index
+  });
+
+
+  @override
+  _videoDetailState createState() => _videoDetailState();
+}
+
+class _videoDetailState extends State<videoDetail> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
