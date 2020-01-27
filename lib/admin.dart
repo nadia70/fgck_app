@@ -25,6 +25,8 @@ class _AdminState extends State<Admin> {
   TextEditingController firstReading = new TextEditingController();
   TextEditingController secondReading = new TextEditingController();
   TextEditingController thirdReading = new TextEditingController();
+  bool _isLoading = false;
+  double _progress;
 
 
 
@@ -79,6 +81,21 @@ class _AdminState extends State<Admin> {
       StorageReference reference =
       FirebaseStorage.instance.ref().child(videoFile.path.toString());
       StorageUploadTask uploadTask = reference.putFile(videoFile);
+
+      uploadTask.events.listen((event) {
+        setState(() {
+          _isLoading = true;
+          _progress = event.snapshot.bytesTransferred.toDouble() / event.snapshot.totalByteCount.toDouble();
+        });
+      }).onError((error) {
+        scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text(error.toString()), backgroundColor: Colors.red,) );
+      });
+
+      uploadTask.onComplete.then((snapshot) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
 
       StorageTaskSnapshot downloadUrl = await uploadTask.onComplete;
 
@@ -154,13 +171,41 @@ class _AdminState extends State<Admin> {
         title: Text('ADMIN'),
           backgroundColor: Colors.deepPurple[900],
         centerTitle: true,
+
+        bottom: _isLoading ? PreferredSize(
+          child: LinearProgressIndicator(
+            value: _progress,
+            backgroundColor: Colors.white,
+          ),
+          preferredSize: Size(MediaQuery.of(context).size.width, 5.0),
+        ) : null,
       ),
       // Use a FutureBuilder to display a loading spinner while waiting for the
       // VideoPlayerController to finish initializing.
       body: new SingleChildScrollView(
         child: Column(
           children: <Widget>[
-
+            Visibility(
+              visible: _controller != null,
+              child: FutureBuilder(
+                future: _initializeVideoPlayerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    // If the VideoPlayerController has finished initialization, use
+                    // the data it provides to limit the aspect ratio of the video.
+                    return AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      // Use the VideoPlayer widget to display the video.
+                      child: VideoPlayer(_controller),
+                    );
+                  } else {
+                    // If the VideoPlayerController is still initializing, show a
+                    // loading spinner.
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
             Center(
               child: new RaisedButton.icon(
                   color: Colors.green,

@@ -66,7 +66,7 @@ class _adminHomeState extends State<adminHome> {
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                             title: Text("Deleted"),
-                                            content: Text("Removed from Cart"),
+                                            content: Text("Removed from Database"),
                                             actions: <Widget>[
                                               FlatButton(
                                                 child: Text("Close"),
