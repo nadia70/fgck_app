@@ -350,6 +350,7 @@ class _videoDetailState extends State<videoDetail> {
       // Use a FutureBuilder to display a loading spinner while waiting for the
       // VideoPlayerController to finish initializing.
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0,10.0,0.0,0.0),

@@ -95,9 +95,9 @@ class _AdminState extends State<Admin> {
           "Title": prodcutTitle.text,
           "preacher": prodcutPrice.text,
           "video": url,
-          "reading1":firstReading,
-          "reading2": secondReading,
-          "reading3": thirdReading,
+          "reading1": firstReading.text,
+          "reading2": secondReading.text,
+          "reading3": thirdReading.text,
           "thumbNail": Imageurl,
           "time": DateTime.now()
         });
@@ -160,27 +160,7 @@ class _AdminState extends State<Admin> {
       body: new SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Visibility(
-              visible: _controller != null,
-              child: FutureBuilder(
-                future: _initializeVideoPlayerFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // If the VideoPlayerController has finished initialization, use
-                    // the data it provides to limit the aspect ratio of the video.
-                    return AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      // Use the VideoPlayer widget to display the video.
-                      child: VideoPlayer(_controller),
-                    );
-                  } else {
-                    // If the VideoPlayerController is still initializing, show a
-                    // loading spinner.
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-            ),
+
             Center(
               child: new RaisedButton.icon(
                   color: Colors.green,
