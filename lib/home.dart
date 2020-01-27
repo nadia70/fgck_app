@@ -51,12 +51,9 @@ class _HomeState extends State<Home> {
                       Column(
                         children: <Widget>[
                           new SizedBox(
-                            height: 10.0,
+                            height: 20.0,
                           ),
-                          Text("Newest Video", style: new TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              color: Colors.black),),
+
 
                           new GestureDetector(
                             onTap: (){
@@ -67,6 +64,9 @@ class _HomeState extends State<Home> {
                                 itemPreacher: snapshot.data[index].data["preacher"],
                                 video: snapshot.data[index].data["video"],
                                 itemDescription: snapshot.data[index].data["productDesc"],
+                                reading1: snapshot.data[index].data["reading1"],
+                                reading2: snapshot.data[index].data["reading2"],
+                                reading3: snapshot.data[index].data["reading3"],
                                 index: index,
 
 
@@ -287,6 +287,9 @@ class videoDetail extends StatefulWidget {
   String itemImage;
   String video;
   String itemDescription;
+  String reading1;
+  String reading2;
+  String reading3;
   final index;
 
   videoDetail({
@@ -297,6 +300,9 @@ class videoDetail extends StatefulWidget {
     this.itemImage,
     this.video,
     this.itemDescription,
+    this.reading1,
+    this.reading2,
+    this.reading3,
     this.index
   });
 
@@ -343,23 +349,52 @@ class _videoDetailState extends State<videoDetail> {
       ),
       // Use a FutureBuilder to display a loading spinner while waiting for the
       // VideoPlayerController to finish initializing.
-      body: FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the VideoPlayerController has finished initialization, use
-            // the data it provides to limit the aspect ratio of the video.
-            return AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              // Use the VideoPlayer widget to display the video.
-              child: VideoPlayer(_controller),
-            );
-          } else {
-            // If the VideoPlayerController is still initializing, show a
-            // loading spinner.
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+      body: Column(
+        children: <Widget>[
+          FutureBuilder(
+            future: _initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                // If the VideoPlayerController has finished initialization, use
+                // the data it provides to limit the aspect ratio of the video.
+                return AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  // Use the VideoPlayer widget to display the video.
+                  child: VideoPlayer(_controller),
+                );
+              } else {
+                // If the VideoPlayerController is still initializing, show a
+                // loading spinner.
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+
+          new Text(widget.itemName,
+            style: new TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14.0,
+                color: Colors.black),),
+
+          new Text(widget.itemPreacher,
+            style: new TextStyle(
+              color: Colors.grey,
+              fontSize: 10.0,),),
+
+          new Text(widget.reading1,
+            style: new TextStyle(
+              color: Colors.grey,
+              fontSize: 10.0,),),
+          new Text(widget.reading2,
+            style: new TextStyle(
+              color: Colors.grey,
+              fontSize: 10.0,),),
+          new Text(widget.reading3,
+            style: new TextStyle(
+              color: Colors.grey,
+              fontSize: 10.0,),),
+
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

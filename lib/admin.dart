@@ -22,6 +22,9 @@ class _AdminState extends State<Admin> {
   File videoFile;
   TextEditingController prodcutTitle = new TextEditingController();
   TextEditingController prodcutPrice = new TextEditingController();
+  TextEditingController firstReading = new TextEditingController();
+  TextEditingController secondReading = new TextEditingController();
+  TextEditingController thirdReading = new TextEditingController();
 
 
 
@@ -92,6 +95,9 @@ class _AdminState extends State<Admin> {
           "Title": prodcutTitle.text,
           "preacher": prodcutPrice.text,
           "video": url,
+          "reading1":firstReading,
+          "reading2": secondReading,
+          "reading3": thirdReading,
           "thumbNail": Imageurl,
           "time": DateTime.now()
         });
@@ -107,6 +113,9 @@ class _AdminState extends State<Admin> {
     setState(() {
       prodcutTitle.text= "";
       prodcutPrice.text="";
+      firstReading.text="";
+      secondReading.text="";
+      thirdReading.text="";
     });
     showDialog(
       context: context,
@@ -203,6 +212,27 @@ class _AdminState extends State<Admin> {
                 textTitle: "Preacher name",
                 textHint: "Enter Preacher name",
                 controller: prodcutPrice),
+            new SizedBox(
+              height: 10.0,
+            ),
+            productTextField(
+                textTitle: "First reading",
+                textHint: "Enter First reading",
+                controller: firstReading),
+            new SizedBox(
+              height: 10.0,
+            ),
+            productTextField(
+                textTitle: "Second reading",
+                textHint: "Second reading",
+                controller: secondReading),
+            new SizedBox(
+              height: 10.0,
+            ),
+            productTextField(
+                textTitle: "Third Reading",
+                textHint: "Enter Third reading",
+                controller: thirdReading),
             new SizedBox(
               height: 10.0,
             ),
