@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:thumbnails/thumbnails.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Admin extends StatefulWidget {
   @override
@@ -56,11 +57,14 @@ class _AdminState extends State<Admin> {
     }
 
     else {
+      var appDocDir = await getApplicationDocumentsDirectory();
+      final folderPath = appDocDir.path;
       final thumb = await VideoThumbnail.thumbnailFile(
         video: videoFile.path.toString(),
-        imageFormat: ImageFormat.PNG,
-        maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-        quality: 75,
+        thumbnailPath: folderPath,
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 400, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 100,
       );
       final thumbImage = File(thumb);
       StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(thumb);
@@ -77,9 +81,7 @@ class _AdminState extends State<Admin> {
 
       String url = await downloadUrl.ref.getDownloadURL();
 
-      Center(
-        child: CircularProgressIndicator(),
-      );
+
 
 
       await Firestore.instance.runTransaction((Transaction transaction) async {

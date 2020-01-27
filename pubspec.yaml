@@ -30,6 +30,7 @@ dependencies:
   chewie: ^0.9.7
   video_thumbnail: ^0.2.0
   thumbnails: ^1.0.1
+  path_provider: ^1.5.1
 
 dev_dependencies:
   flutter_test:

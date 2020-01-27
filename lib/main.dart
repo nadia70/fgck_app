@@ -3,6 +3,8 @@ import 'package:fgck_app/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'admin_home.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -133,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: MaterialButton(
                                   onPressed: (){
                                     Navigator.of(context).push(new CupertinoPageRoute(
-                                        builder: (BuildContext context) => new  Admin()
+                                        builder: (BuildContext context) => new  adminHome()
                                     )
                                     );
                                   },
