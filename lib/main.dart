@@ -1,5 +1,6 @@
 import 'package:fgck_app/admin.dart';
 import 'package:fgck_app/home.dart';
+import 'package:fgck_app/tabs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 child: MaterialButton(
                                   onPressed: (){
                                     Navigator.of(context).push(new CupertinoPageRoute(
-                                        builder: (BuildContext context) => new Home()
+                                        builder: (BuildContext context) => new tabView()
                                     )
                                     );
                                   },

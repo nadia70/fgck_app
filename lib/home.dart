@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fgck_app/video_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,7 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final FirebaseMessaging _messaging = FirebaseMessaging();
 
+  TabController controller;
   Future getVideo() async{
     var firestore = Firestore.instance;
     QuerySnapshot qn = await firestore.collection("videos").orderBy('time').getDocuments();
@@ -20,6 +24,73 @@ class _HomeState extends State<Home> {
     var firestore = Firestore.instance;
     QuerySnapshot snap = await firestore.collection("videos").orderBy('time', descending: true).limit(1).getDocuments();
     return snap.documents;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _messaging.subscribeToTopic('all');
+    _messaging.getToken().then((token) {
+      print(token);
+    });
+    _messaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+        // TODO optional
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -50,9 +121,6 @@ class _HomeState extends State<Home> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          new SizedBox(
-                            height: 20.0,
-                          ),
 
 
                           new GestureDetector(
