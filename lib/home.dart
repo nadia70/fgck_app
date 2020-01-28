@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _messaging.subscribeToTopic('all');
+    _messaging.subscribeToTopic('sermon');
     _messaging.getToken().then((token) {
       print(token);
     });
@@ -265,6 +265,9 @@ class _HomeState extends State<Home> {
                                         itemPreacher: snapshot.data[index].data["preacher"],
                                         video: snapshot.data[index].data["video"],
                                         itemDescription: snapshot.data[index].data["productDesc"],
+                                        reading1: snapshot.data[index].data["reading1"],
+                                        reading2: snapshot.data[index].data["reading2"],
+                                        reading3: snapshot.data[index].data["reading3"],
                                         index: index,
 
 
@@ -442,29 +445,79 @@ class _videoDetailState extends State<videoDetail> {
             ),
           ),
 
-          new Text(widget.itemName,
-            style: new TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14.0,
-                color: Colors.black),),
+          Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text("Sermon title:",
+                    style: new TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14.0,
+                        color: Colors.black),),
+                  new Text(widget.itemName,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14.0,
+                        color: Colors.black),),
+                ],
+              ),
 
-          new Text(widget.itemPreacher,
-            style: new TextStyle(
-              color: Colors.grey,
-              fontSize: 10.0,),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text("Preacher:",
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14.0,),),
+                  new Text(widget.itemPreacher,
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14.0,),),
+                ],
+              ),
 
-          new Text(widget.reading1,
-            style: new TextStyle(
-              color: Colors.grey,
-              fontSize: 10.0,),),
-          new Text(widget.reading2,
-            style: new TextStyle(
-              color: Colors.grey,
-              fontSize: 10.0,),),
-          new Text(widget.reading3,
-            style: new TextStyle(
-              color: Colors.grey,
-              fontSize: 10.0,),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text("First reading",
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,),),
+                  new Text(widget.reading1,
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,),),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text("Second reading",
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,),),
+                  new Text(widget.reading2,
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,),),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new Text("Third reading",
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,),),
+                  new Text(widget.reading3,
+                    style: new TextStyle(
+                      color: Colors.grey,
+                      fontSize: 10.0,),),
+                ],
+              ),
+            ],
+          ),
 
         ],
       ),
