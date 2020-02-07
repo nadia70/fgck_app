@@ -450,89 +450,27 @@ class _videoDetailState extends State<videoDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new Text("Sermon title:",
-                      style: new TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0,
-                          color: Colors.black),),
-                    new Text(widget.itemName,
-                      style: new TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0,
-                          color: Colors.black),),
-                  ],
+                ListTile(
+                  title: Text("Sermon title"),
+                  subtitle: Text(widget.itemName) ,
                 ),
-
-                SizedBox(
-                  height: 10.0,
+                ListTile(
+                  title: Text("Preacher"),
+                  subtitle: Text(widget.itemPreacher) ,
                 ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    new Text("Preacher:",
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14.0,),),
-                    new Text(widget.itemPreacher,
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14.0,),),
-                  ],
+                ListTile(
+                  title: Text("1st reading"),
+                  subtitle: Text(widget.reading1) ,
                 ),
-
-                SizedBox(
-                  height: 10.0,
+                ListTile(
+                  title: Text("2nd reading"),
+                  subtitle: Text(widget.reading2) ,
                 ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    new Text("First reading",
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,),),
-                    new Text(widget.reading1,
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,),),
-                  ],
+                ListTile(
+                  title: Text("3rd reading"),
+                  subtitle: Text(widget.reading3) ,
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    new Text("Second reading",
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,),),
-                    new Text(widget.reading2,
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,),),
-                  ],
-                ),
-                SizedBox(
-                 height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    new Text("Third reading",
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,),),
-                    new Text(widget.reading3,
-                      style: new TextStyle(
-                        color: Colors.grey,
-                        fontSize: 10.0,),),
-                  ],
-                ),
+                Divider(),
               ],
             ),
           ),

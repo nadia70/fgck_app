@@ -1,10 +1,13 @@
 import 'package:fgck_app/admin.dart';
+import 'package:fgck_app/dashboard.dart';
 import 'package:fgck_app/home.dart';
 import 'package:fgck_app/tabs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'admin_home.dart';
+import 'loginUI/Login.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,6 +41,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  String _email;
+  String id;
+  String _password;
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    autoLogIn();
+  }
+
+  void autoLogIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String userId = prefs.getString('user');
+    final String dept = prefs.getString('dept');
+
+    if (dept == "user" && userId != null) {
+      Navigator.of(context).push(new CupertinoPageRoute(
+          builder: (BuildContext context) => new tabView()
+      ));
+    }
+
+    if (dept == "admin" && userId != null) {
+      Navigator.of(context).push(new CupertinoPageRoute(
+          builder: (BuildContext context) => new tabView()
+      ));
+    }
+    else {
+      Navigator.of(context).push(new CupertinoPageRoute(
+          builder: (BuildContext context) => new Login()
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,10 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
                 Colors.white,
                 Colors.white,
-                Colors.indigo[50],
-                Colors.blue[50],
-                Colors.indigoAccent,
-                Colors.deepPurple[900],
               ],
             ),
           ),
@@ -92,79 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 10.0,
               ),
 
-
-
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                                child: MaterialButton(
-                                  onPressed: (){
-                                    Navigator.of(context).push(new CupertinoPageRoute(
-                                        builder: (BuildContext context) => new tabView()
-                                    )
-                                    );
-                                  },
-                                  child: Text('Home',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: 'SFUIDisplay',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  color: Colors.white,
-                                  elevation: 16.0,
-                                  minWidth: 400,
-                                  height: 50,
-                                  textColor: Colors.deepPurple[900],
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(9.0)
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                                child: MaterialButton(
-                                  onPressed: (){
-                                    Navigator.of(context).push(new CupertinoPageRoute(
-                                        builder: (BuildContext context) => new  adminHome()
-                                    )
-                                    );
-                                  },
-                                  child: Text('Admin',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontFamily: 'SFUIDisplay',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  color: Colors.white,
-                                  elevation: 16.0,
-                                  minWidth: 400,
-                                  height: 50,
-                                  textColor: Colors.deepPurple[900],
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(9.0)
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: 30.0,
               ),

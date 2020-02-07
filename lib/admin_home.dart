@@ -20,6 +20,7 @@ class _adminHomeState extends State<adminHome> {
 
   CollectionReference collectionReference =
   Firestore.instance.collection("videos");
+  final db = Firestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -31,53 +32,68 @@ class _adminHomeState extends State<adminHome> {
         child: Column(
           children: <Widget>[
 
-            StreamBuilder<Object>(
-              stream: null,
-              builder: (context, snapshot) {
-                return FutureBuilder(
-                    future: getList(),
-                    builder: (context, snapshot){
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: Text("Loading... Please wait"),
-                        );
-                      }if (snapshot.data == null){
-                        return Center(
-                          child: Text("The are no Videos"),);
-                      }else{
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
+            ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(12.0),
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                StreamBuilder<QuerySnapshot>(
+                    stream: db.collection('videos').snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data.documents.map((doc) {
                             return ListTile(
-                              leading: Image.network(snapshot.data[index].data["thumbNail"]),
-                              title: Text("${snapshot.data[index].data["Title"]}"),
-                              subtitle: Text("${snapshot.data[index].data["preacher"]}"),
+                              leading: Image.network(doc.data["thumbNail"]),
+                              title: Text("${doc.data["Title"]}"),
+                              subtitle: Text("${doc.data["preacher"]}"),
                               trailing: RaisedButton(
                                 color: Colors.deepPurple[900],
-                                  onPressed: () async {
-                                    await
-                                    collectionReference
-                                        .document(snapshot.data[index].documentID)
-                                        .delete();
+                                onPressed: () async {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Delete this video"),
+                                          content: Text("Are you sure??"),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text("Yes"),
+                                              onPressed: () async {
+                                                await db
+                                                    .collection('videos')
+                                                    .document(doc.documentID)
+                                                    .delete();
 
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text("Deleted"),
-                                            content: Text("Removed from Database"),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text("Close"),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              )
-                                            ],
-                                          );
-                                        });
-                                  },
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text("Deleted"),
+                                                        content: Text("Stand deleted from database"),
+                                                        actions: <Widget>[
+                                                          FlatButton(
+                                                            child: Text("Close"),
+                                                            onPressed: () {
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          )
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                            ),
+                                            FlatButton(
+                                              child: Text("No"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            )
+                                          ],
+                                        );
+                                      });
+
+                                },
                                 child: new Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
@@ -87,13 +103,13 @@ class _adminHomeState extends State<adminHome> {
                                 ),
                               ),
                             );
-
-                          },
+                          }).toList(),
                         );
-
+                      } else {
+                        return SizedBox();
                       }
-                    });
-              }
+                    }),
+              ],
             ),
 
 

@@ -1,7 +1,10 @@
 import 'package:fgck_app/events.dart';
 import 'package:fgck_app/gallery.dart';
+import 'package:fgck_app/loginUI/Login.dart';
 import 'package:fgck_app/profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
 
 import 'home.dart';
@@ -14,13 +17,17 @@ class tabView extends StatefulWidget {
 class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
 
   TabController controller;
+  String _email;
+  String id;
+  String _password;
+  bool isLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = new TabController(length: 4, vsync: this);
+    controller = new TabController(length: 3, vsync: this);
   }
 
   @override
@@ -28,6 +35,20 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
     // Dispose of the Tab Controller
     controller.dispose();
     super.dispose();
+  }
+
+  Future<Null> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('username', "");
+    prefs.setString('dept', "");
+
+    setState(() {
+      isLoggedIn = false;
+    });
+
+    Navigator.of(context).push(new CupertinoPageRoute(
+        builder: (BuildContext context) => new Login()
+    ));
   }
 
   @override
@@ -39,17 +60,42 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
         centerTitle: true,
         backgroundColor: Colors.white,
         actions: [
-          new IconButton(
-            icon: new Image.asset('assets/fgck.png'),
-            onPressed: () {},
-          )
+          PopupMenuButton(
+            icon: new CircleAvatar(
+              maxRadius: 70.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Icon(Icons.person),
+                ],
+              ),
+            ),
+            onSelected: (String value) {
+              switch (value) {
+                case 'logout':
+                  logout();
+                  break;
+              // Other cases for other menu options
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem<String>(
+                value: "logout",
+                child: Row(
+                  children: <Widget>[
+                    Text("LOGOUT"),
+                    Icon(Icons.exit_to_app, color: Colors.deepPurple[900],),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ]
-
       ),
 
       body: new TabBarView(
         // Add tabs as widgets
-        children: <Widget>[new Home(),  new events(), new Gallery(), new profile(), ],
+        children: <Widget>[new Home(),  new events(), new profile(), ],
         // set the controller
         controller: controller,
       ),
@@ -66,9 +112,6 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
             ),
             new Tab(
               icon: new Icon(Icons.calendar_today),
-            ),
-            new Tab(
-              icon: new Icon(Icons.photo_library),
             ),
 
             new Tab(

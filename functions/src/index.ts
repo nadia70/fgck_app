@@ -14,6 +14,8 @@ export const sendToTopic = functions.firestore
            notification: {
              title: 'New Sermon!',
              body: `A new sermon has been uploaded`,
+             icon: "default",
+             sound: "default"
            }
          };
 
