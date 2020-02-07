@@ -118,7 +118,7 @@ class _profileState extends State<profile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
 
-                            Text("Logged in As:"),
+                            Text("Edit your login details here:"),
                             Padding(
                               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: Container(
