@@ -61,15 +61,7 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
         backgroundColor: Colors.white,
         actions: [
           PopupMenuButton(
-            icon: new CircleAvatar(
-              maxRadius: 70.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Icon(Icons.person),
-                ],
-              ),
-            ),
+            icon: new Icon(Icons.person),
             onSelected: (String value) {
               switch (value) {
                 case 'logout':

@@ -65,16 +65,7 @@ class _DashboardState extends State<Dashboard> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         PopupMenuButton(
-                          icon: new CircleAvatar(
-                            maxRadius: 100.0,
-                            backgroundColor: Colors.white,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new Icon(Icons.person),
-                              ],
-                            ),
-                          ),
+                          icon: new Icon(Icons.person),
                           onSelected: (String value) {
                             switch (value) {
                               case 'logout':
