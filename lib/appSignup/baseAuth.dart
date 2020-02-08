@@ -7,6 +7,8 @@ abstract class BaseAuth {
 
   Future<String> signUp(String email, String password);
 
+  Future<String> login(String email, String password);
+
   Future<FirebaseUser> getCurrentUser();
 
   Future<void> sendEmailVerification();
@@ -30,6 +32,13 @@ class Auth implements BaseAuth {
       "uid": current.uid,
       "email": current.email,
     });
+    AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    FirebaseUser user = result.user;
+    return user.uid;
+  }
+
+  Future<String> login(String email, String password) async {
     AuthResult result = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
     FirebaseUser user = result.user;

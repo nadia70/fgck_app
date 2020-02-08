@@ -21,3 +21,22 @@ export const sendToTopic = functions.firestore
 
          return fcm.sendToTopic('sermon', message);
        });
+
+
+
+
+export const newEvent = functions.firestore
+       .document('events/{Item}')
+       .onCreate(async snapshot => {
+
+         const message: admin.messaging.MessagingPayload = {
+           notification: {
+             title: 'New Event!',
+             body: `There is a new event at Full Gospel Church`,
+             icon: "default",
+             sound: "default"
+           }
+         };
+
+         return fcm.sendToTopic('sermon', message);
+       });
