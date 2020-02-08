@@ -1,4 +1,6 @@
 import 'package:fgck_app/admin.dart';
+import 'package:fgck_app/appSignup/baseAuth.dart';
+import 'package:fgck_app/appSignup/root.dart';
 import 'package:fgck_app/dashboard.dart';
 import 'package:fgck_app/home.dart';
 import 'package:fgck_app/tabs.dart';
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
-      home:  MyHomePage(),
+      home:  RootPage(auth: new Auth()),
     );
   }
 }

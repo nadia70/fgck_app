@@ -97,253 +97,251 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-      body: Container(
-        child: Column(
-          children: <Widget>[
+      body: Column(
+        children: <Widget>[
 
 
-        new Flexible(
-        child: FutureBuilder(
-            future: getNew(),
-          builder: (context, snapshot){
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Text("Loading... Please wait"),
-              );
-            }if (snapshot.data == null){
-              return Center(
-                child: Text("The are no Videos"),);
-            }else{
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
+      new Flexible(
+      child: FutureBuilder(
+          future: getNew(),
+        builder: (context, snapshot){
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text("Loading... Please wait"),
+            );
+          }if (snapshot.data == null){
+            return Center(
+              child: Text("The are no Videos"),);
+          }else{
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
 
 
-                          new GestureDetector(
-                            onTap: (){
-                              Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new videoDetail(
+                        new GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new videoDetail(
 
-                                itemImage: snapshot.data[index].data["thumbNail"][0],
-                                itemName: snapshot.data[index].data["Title"],
-                                itemPreacher: snapshot.data[index].data["preacher"],
-                                video: snapshot.data[index].data["video"],
-                                itemDescription: snapshot.data[index].data["productDesc"],
-                                reading1: snapshot.data[index].data["reading1"],
-                                reading2: snapshot.data[index].data["reading2"],
-                                reading3: snapshot.data[index].data["reading3"],
-                                index: index,
+                              itemImage: snapshot.data[index].data["thumbNail"][0],
+                              itemName: snapshot.data[index].data["Title"],
+                              itemPreacher: snapshot.data[index].data["preacher"],
+                              video: snapshot.data[index].data["video"],
+                              itemDescription: snapshot.data[index].data["productDesc"],
+                              reading1: snapshot.data[index].data["reading1"],
+                              reading2: snapshot.data[index].data["reading2"],
+                              reading3: snapshot.data[index].data["reading3"],
+                              index: index,
 
 
-                              )));
-                            },
-                            child: new Card(
-                              child: Stack(
-                                alignment: FractionalOffset.topLeft,
-                                children: <Widget>[
-                                  new Stack(
-                                    alignment: FractionalOffset.bottomCenter,
-                                    children: <Widget>[
-                                      new Container(
-                                        height:250.0 ,
-                                        decoration: new BoxDecoration(
-                                            image: new DecorationImage(
-                                                fit: BoxFit.fitHeight,
-                                                image: new NetworkImage(snapshot.data[index].data["thumbNail"]))
-                                        ),
-
+                            )));
+                          },
+                          child: new Card(
+                            child: Stack(
+                              alignment: FractionalOffset.topLeft,
+                              children: <Widget>[
+                                new Stack(
+                                  alignment: FractionalOffset.bottomCenter,
+                                  children: <Widget>[
+                                    new Container(
+                                      height:250.0 ,
+                                      decoration: new BoxDecoration(
+                                          image: new DecorationImage(
+                                              fit: BoxFit.fitHeight,
+                                              image: new NetworkImage(snapshot.data[index].data["thumbNail"]))
                                       ),
-                                      new Container(
-                                        height:50.0 ,
-                                        color: Colors.black.withAlpha(100),
-                                        child: new Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: new Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Column(
-                                                children: <Widget>[
-                                                  new Text("${snapshot.data[index].data["Title"]}",
-                                                    style: new TextStyle(
-                                                        fontWeight: FontWeight.w700,
-                                                        fontSize: 16.0,
-                                                        color: Colors.white),),
 
-                                                  new Text("${snapshot.data[index].data["preacher"]}",
-                                                    style: new TextStyle(
-                                                        color: Colors.red[500],
-                                                        fontSize: 12.0,),),
-                                                ],
-                                              ),
-
-                                              Container(
-                                                padding: const EdgeInsets.all(5.0),
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.white)
-                                                ),
-                                                child: new Text("NEW",
+                                    ),
+                                    new Container(
+                                      height:50.0 ,
+                                      color: Colors.black.withAlpha(100),
+                                      child: new Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: new Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Column(
+                                              children: <Widget>[
+                                                new Text("${snapshot.data[index].data["Title"]}",
                                                   style: new TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.w400),),
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 16.0,
+                                                      color: Colors.white),),
+
+                                                new Text("${snapshot.data[index].data["preacher"]}",
+                                                  style: new TextStyle(
+                                                      color: Colors.red[500],
+                                                      fontSize: 12.0,),),
+                                              ],
+                                            ),
+
+                                            Container(
+                                              padding: const EdgeInsets.all(5.0),
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.white)
                                               ),
+                                              child: new Text("NEW",
+                                                style: new TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w400),),
+                                            ),
 
-                                            ],
-                                          ),
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    )
+                                  ],
+                                ),
 
-                                ],
-                              ),
+                              ],
                             ),
                           ),
+                        ),
 
-                        ],
-                      ),
-                      new SizedBox(
-                        height: 10.0,
-                      ),
-                    ],
-                  );
+                      ],
+                    ),
+                    new SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                );
 
-                },
-              );
+              },
+            );
 
-            }
-          }),),
+          }
+        }),),
 
-            new SizedBox(
-              height: 15.0,
+          new SizedBox(
+            height: 15.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text("Previous uploads", style: new TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black),),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text("Previous uploads", style: new TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black),),
-                ],
-              ),
-            ),
+          ),
 
-            new Flexible(
-              child: FutureBuilder(
-                  future: getVideo(),
-                  builder: (context, snapshot){
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: Text("Loading... Please wait"),
-                      );
-                    }if (snapshot.data == null){
-                      return Center(
-                        child: Text("The are no Videos"),);
-                    }else{
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  new SizedBox(
-                                    height: 10.0,
-                                  ),
+          new Flexible(
+            child: FutureBuilder(
+                future: getVideo(),
+                builder: (context, snapshot){
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: Text("Loading... Please wait"),
+                    );
+                  }if (snapshot.data == null){
+                    return Center(
+                      child: Text("The are no Videos"),);
+                  }else{
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                new SizedBox(
+                                  height: 10.0,
+                                ),
 
 
-                                  new GestureDetector(
-                                    onTap: (){
-                                      Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new videoDetail(
+                                new GestureDetector(
+                                  onTap: (){
+                                    Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new videoDetail(
 
-                                        itemImage: snapshot.data[index].data["thumbNail"][0],
-                                        itemName: snapshot.data[index].data["Title"],
-                                        itemPreacher: snapshot.data[index].data["preacher"],
-                                        video: snapshot.data[index].data["video"],
-                                        itemDescription: snapshot.data[index].data["productDesc"],
-                                        reading1: snapshot.data[index].data["reading1"],
-                                        reading2: snapshot.data[index].data["reading2"],
-                                        reading3: snapshot.data[index].data["reading3"],
-                                        index: index,
+                                      itemImage: snapshot.data[index].data["thumbNail"][0],
+                                      itemName: snapshot.data[index].data["Title"],
+                                      itemPreacher: snapshot.data[index].data["preacher"],
+                                      video: snapshot.data[index].data["video"],
+                                      itemDescription: snapshot.data[index].data["productDesc"],
+                                      reading1: snapshot.data[index].data["reading1"],
+                                      reading2: snapshot.data[index].data["reading2"],
+                                      reading3: snapshot.data[index].data["reading3"],
+                                      index: index,
 
 
-                                      )));
-                                    },
-                                    child: new Card(
-                                      elevation:5,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5.0),
-                                      ),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Stack(
-                                            alignment: FractionalOffset.topLeft,
-                                            children: <Widget>[
-                                              new Container(
-                                                width: MediaQuery.of(context).size.width * 0.6,
-                                                height: MediaQuery.of(context).size.height * 0.25,
-                                                decoration: new BoxDecoration(
-                                                    image: new DecorationImage(
-                                                        fit: BoxFit.fitHeight,
-                                                        image: new NetworkImage(snapshot.data[index].data["thumbNail"]))
+                                    )));
+                                  },
+                                  child: new Card(
+                                    elevation:5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Stack(
+                                          alignment: FractionalOffset.topLeft,
+                                          children: <Widget>[
+                                            new Container(
+                                              width: MediaQuery.of(context).size.width * 0.4,
+                                              height: MediaQuery.of(context).size.height * 0.2,
+                                              decoration: new BoxDecoration(
+                                                  image: new DecorationImage(
+                                                      fit: BoxFit.fitHeight,
+                                                      image: new NetworkImage(snapshot.data[index].data["thumbNail"]))
+                                              ),
+
+                                            ),
+
+                                          ],
+                                        ),
+                                        new Container(
+                                          height:50.0 ,
+                                          color: Colors.white,
+                                          child: new Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: new Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Column(
+                                                  children: <Widget>[
+                                                    new Text("${snapshot.data[index].data["Title"]}",
+                                                      style: new TextStyle(
+                                                          fontWeight: FontWeight.w700,
+                                                          fontSize: 14.0,
+                                                          color: Colors.black),),
+
+                                                    new Text("${snapshot.data[index].data["preacher"]}",
+                                                      style: new TextStyle(
+                                                        color: Colors.red[500],
+                                                        fontSize: 10.0,),),
+                                                  ],
                                                 ),
 
-                                              ),
-
-                                            ],
-                                          ),
-                                          new Container(
-                                            height:50.0 ,
-                                            color: Colors.white,
-                                            child: new Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: new Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: <Widget>[
-                                                  Column(
-                                                    children: <Widget>[
-                                                      new Text("${snapshot.data[index].data["Title"]}",
-                                                        style: new TextStyle(
-                                                            fontWeight: FontWeight.w700,
-                                                            fontSize: 14.0,
-                                                            color: Colors.black),),
-
-                                                      new Text("${snapshot.data[index].data["preacher"]}",
-                                                        style: new TextStyle(
-                                                          color: Colors.red[500],
-                                                          fontSize: 10.0,),),
-                                                    ],
-                                                  ),
-
-                                                ],
-                                              ),
+                                              ],
                                             ),
-                                          )
-                                        ],
-                                      ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
+                                ),
 
-                                ],
-                              ),
-                              new SizedBox(
-                                height: 10.0,
-                              ),
-                            ],
-                          );
+                              ],
+                            ),
+                            new SizedBox(
+                              height: 10.0,
+                            ),
+                          ],
+                        );
 
-                        },
-                      );
+                      },
+                    );
 
-                    }
-                  }),),
+                  }
+                }),),
 
-          ],
-        ),
+        ],
       )
 
     );

@@ -6,6 +6,7 @@ import 'package:fgck_app/events.dart';
 import 'package:fgck_app/fade_route_builder.dart';
 import 'package:fgck_app/loginUI/Login.dart';
 import 'package:fgck_app/loginUI/bacground.dart';
+import 'package:fgck_app/tabs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +29,7 @@ class _DashboardState extends State<Dashboard> {
     });
 
     Navigator.of(context).push(new CupertinoPageRoute(
-        builder: (BuildContext context) => new Login()
+        builder: (BuildContext context) => new tabView()
     ));
   }
 

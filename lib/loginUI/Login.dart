@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
 
 
   _loginCommand() async {
-    var collectionReference = Firestore.instance.collection('users');
+    var collectionReference = Firestore.instance.collection('admin');
     var query = collectionReference.where("name", isEqualTo: _email ).where('pw', isEqualTo: _password);
     query.getDocuments().then((querySnapshot) {
       if (querySnapshot.documents.length == 0) {
@@ -210,27 +210,6 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(70, 10, 70, 0),
-                      child: FlatButton(
-                        onPressed: (){
-                          Navigator.of(context).push(new CupertinoPageRoute(
-                              builder: (BuildContext context) => new Signup()
-                          )
-                          );
-                        },
-                        child: Text('New user? Sign up here',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontFamily: 'SFUIDisplay',
-                          ),
-                        ),
-                        textColor: Colors.red[900],
-                      ),
-                    ),
-
-
 
 
                   ],

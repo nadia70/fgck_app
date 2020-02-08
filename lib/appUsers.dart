@@ -13,15 +13,6 @@ class _appUsersState extends State<appUsers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("App users")),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        //Widget to display inside Floating Action Button, can be `Text`, `Icon` or any widget.
-        onPressed: () {
-          Navigator.of(context).push(new CupertinoPageRoute(
-              builder: (BuildContext context) => new addUser()
-          ));
-        },
-      ),
       body: ListView(
         padding: EdgeInsets.all(12.0),
         children: <Widget>[
@@ -33,24 +24,13 @@ class _appUsersState extends State<appUsers> {
                   return Column(
                     children: snapshot.data.documents.map((doc) {
                       return GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new userDetails(
-
-                            name: doc.data["name"],
-                            uid: doc.data["uid"],
-                            pw: doc.data["pw"],
-                            dept: doc.data["dept"],
-                            docID: doc.documentID,
-
-                          )));
-                        },
+                        onTap: (){},
                         child: ListTile(
                             leading: CircleAvatar(
                               child: new Icon(Icons.person),
                             ),
-                            title: Text(doc.data['name']),
-                            subtitle: Text(doc.data["dept"]),
-                            trailing: IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: null)
+                            title: Text(doc.data['email'], style: TextStyle(fontSize: 20),),
+
                         ),
                       );
                     }).toList(),

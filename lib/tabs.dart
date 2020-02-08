@@ -1,3 +1,4 @@
+import 'package:fgck_app/appSignup/baseAuth.dart';
 import 'package:fgck_app/events.dart';
 import 'package:fgck_app/gallery.dart';
 import 'package:fgck_app/loginUI/Login.dart';
@@ -10,6 +11,14 @@ import 'dart:ui';
 import 'home.dart';
 
 class tabView extends StatefulWidget {
+  tabView({Key key, this.auth, this.userId, this.logoutCallback})
+      : super(key: key);
+
+  final BaseAuth auth;
+  final VoidCallback logoutCallback;
+  final String userId;
+
+
   @override
   _tabViewState createState() => _tabViewState();
 }
@@ -27,7 +36,7 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = new TabController(length: 3, vsync: this);
+    controller = new TabController(length: 2, vsync: this);
   }
 
   @override
@@ -59,35 +68,32 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
         title: Text("Full Gospel Church", style: TextStyle(color: Colors.black)),
         centerTitle: true,
         backgroundColor: Colors.white,
-        actions: [
-          PopupMenuButton(
-            icon: new Icon(Icons.person, color: Colors.deepPurple[900],),
-            onSelected: (String value) {
-              switch (value) {
-                case 'logout':
-                  logout();
-                  break;
-              // Other cases for other menu options
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem<String>(
-                value: "logout",
-                child: Row(
-                  children: <Widget>[
-                    Text("LOGOUT"),
-                    Icon(Icons.exit_to_app, color: Colors.deepPurple[900],),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ]
+        iconTheme: new IconThemeData(color: Colors.deepPurple[900],),
+      ),
+
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            new DrawerHeader(decoration: new BoxDecoration(
+              color: Colors.deepPurple[900],
+            ),),
+            new Divider(),
+            new ListTile(
+              leading: new Icon(Icons.group),
+              title: new Text("Admin"),
+              onTap: (){
+                Navigator.of(context).push(new CupertinoPageRoute(
+                    builder: (BuildContext context) => new Login()
+                ));
+              },
+            ),
+          ],
+        ),
       ),
 
       body: new TabBarView(
         // Add tabs as widgets
-        children: <Widget>[new Home(),  new events(), new profile(), ],
+        children: <Widget>[new Home(),  new events(), ],
         // set the controller
         controller: controller,
       ),
@@ -99,15 +105,12 @@ class _tabViewState extends State<tabView> with SingleTickerProviderStateMixin {
         child: new TabBar(
           tabs: <Tab>[
             new Tab(
-              // set icon to the tab
+              text: 'HOME',// set icon to the tab
               icon: new Icon(Icons.home),
             ),
             new Tab(
+              text: 'EVENTS',
               icon: new Icon(Icons.calendar_today),
-            ),
-
-            new Tab(
-              icon: new Icon(Icons.person),
             ),
           ],
           // setup the controller
